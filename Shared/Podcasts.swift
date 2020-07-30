@@ -79,7 +79,9 @@ class PodcastParser: NSObject, XMLParserDelegate {
                 }
             }
         } else if self.elementName == "media:content" {
-            if let audioURL = self.attributes["url"] {
+            if let audioURL = self.attributes["url"],
+               let type = self.attributes["type"],
+               type.contains("audio") {
                 self.episode.audioURL = audioURL
             }
         }

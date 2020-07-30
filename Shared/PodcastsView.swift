@@ -7,15 +7,13 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct PodcastsView: View {
     var podcasts: [Podcast] = []
     var body: some View {
         NavigationView {
             List(podcasts) {podcast in
                 NavigationLink(
-                    destination: List(podcast.episodes) { episode in
-                        Text(episode.title)
-                    }.navigationTitle("Episodes")) {
+                    destination: EpisodesView(episodes: podcast.episodes)) {
                     Image(systemName: "photo")
                     VStack(alignment: .leading) {
                         Text(podcast.title)
@@ -31,6 +29,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(podcasts: testData)
+        PodcastsView(podcasts: testData)
     }
 }

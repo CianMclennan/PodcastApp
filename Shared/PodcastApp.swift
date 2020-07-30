@@ -14,7 +14,7 @@ struct PodcastApplication: App {
     let test = PodcastParser().podcast;
     var body: some Scene {
         WindowGroup {
-            ContentView(podcasts: [
+            PodcastsView(podcasts: [
                 test
             ])
         }
