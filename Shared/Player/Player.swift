@@ -11,8 +11,8 @@ import AVKit
 import Combine // for observing and adding as environmentObject
 
 final class AudioPlayer: AVPlayer, ObservableObject {
-
-    var currentTimeUpstream = PassthroughSubject<Double, Never>()
+    
+    var currentTimeDidChange = PassthroughSubject<Double, Never>()
     var timeObserverToken: Any?
     
     static let shared = AudioPlayer();
@@ -28,7 +28,7 @@ final class AudioPlayer: AVPlayer, ObservableObject {
                 if let player = self
                 {
                     let currentTime = CMTimeGetSeconds(player.currentTime()) as Double
-                    self?.currentTimeUpstream.send(currentTime);
+                    self?.currentTimeDidChange.send(currentTime);
                 }
             }
         
