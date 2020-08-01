@@ -13,32 +13,42 @@ enum JumpTime {
 }
 
 struct PlayerControlsView: View {
-    var player: AVPlayer;
     @Binding var isPaused: Bool
     var forwardTime:JumpTime = .thirty;
     var backwardTime:JumpTime = .thirty;
     
+    var seekForwardSelector: (Double) -> Void
+    var seekBackwardSelector: (Double) -> Void
+    var togglePlayPauseSelector: () -> Void
+    
     var body: some View {
         HStack() {
-            Button(action: goBack) {
-                Image(systemName: "gobackward.\(timeAsInt(backwardTime))")
-                    .padding(.all)
+            Button(action: {
+                seekBackwardSelector(timeAsDouble(backwardTime))
+            }) {
+                Image(systemName: "gobackward.\(Int(timeAsDouble(backwardTime)))")
             }
-            Button(action: togglePlayPause) {
+            .padding(.trailing)
+            Button(action: self.togglePlayPauseSelector) {
                 Image(systemName:
                         self.isPaused ?
                         "play.fill" :
                         "pause.fill"
                 )
-                    .padding(.all)
+                .frame(width: 15.0)
+                    
             }
-            Button(action: goForward) {
-                Image(systemName: "goforward.\(timeAsInt(forwardTime))")
-                    .padding(.all)
+            .padding(.horizontal)
+            Button(action: {
+                seekForwardSelector(timeAsDouble(forwardTime))
+            }) {
+                Image(systemName: "goforward.\(Int(timeAsDouble(forwardTime)))")
+                    
             }
+            .padding(.leading)
         }
     }
-    private func timeAsInt(_ time:JumpTime) -> Int {
+    private func timeAsDouble(_ time:JumpTime) -> Double {
         switch time {
         case .ten:
             return 10
@@ -50,29 +60,15 @@ struct PlayerControlsView: View {
             return 45
         }
     }
-    func goBack() {
-        let currentTime = CMTimeGetSeconds(self.player.currentTime()) as Double
-        let skipTime:Double = Double(timeAsInt(backwardTime));
-        player.seek(to: CMTime(seconds: currentTime-skipTime, preferredTimescale: 1));
-    }
-    func goForward() {
-        let currentTime = CMTimeGetSeconds(self.player.currentTime()) as Double
-        let skipTime:Double = Double(timeAsInt(forwardTime));
-        player.seek(to: CMTime(seconds: currentTime+skipTime, preferredTimescale: 1));
-    }
-    func togglePlayPause() {
-        if self.isPaused {
-            self.player.play()
-            self.isPaused = false;
-        }  else {
-            self.player.pause()
-            self.isPaused = true;
-        }
-    }
 }
 
 struct PlayerControlsView_Previews: PreviewProvider {
     static var previews: some View {
-        PlayerControlsView(player: AVPlayer(), isPaused: .constant(true))
+        PlayerControlsView(
+            isPaused: .constant(true),
+            seekForwardSelector: {seconds in },
+            seekBackwardSelector:{seconds in },
+            togglePlayPauseSelector: {}
+        )
     }
 }
