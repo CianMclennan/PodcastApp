@@ -11,12 +11,12 @@ let feed = XMLParser(contentsOf: URL(fileReferenceLiteralResourceName: "podcast.
 
 @main
 struct PodcastApplication: App {
-    let test = PodcastParser().podcast;
+//    let test = PodcastParser();
+    let podcasts  = try? PodcastData.shared.context().fetch(Podcast.fetchRequest()) as? [Podcast]
     var body: some Scene {
         WindowGroup {
-            PodcastsView(podcasts: [
-                test
-            ])
+            PodcastsView(podcasts: podcasts ?? [])
+            Text("Placeholder")
         }
     }
 }

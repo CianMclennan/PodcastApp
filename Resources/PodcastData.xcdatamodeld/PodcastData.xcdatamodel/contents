@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17175" systemVersion="19G73" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Episode" representedClassName="Episode" syncable="YES" codeGenerationType="class">
+        <attribute name="audio" optional="YES" attributeType="Binary"/>
+        <attribute name="content_url" optional="YES" attributeType="URI"/>
+        <attribute name="currentTime" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="duration" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="episode_number" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="pub_date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="summary" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <relationship name="podcast" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Podcast" inverseName="episodes" inverseEntity="Podcast"/>
+    </entity>
+    <entity name="Podcast" representedClassName="Podcast" syncable="YES" codeGenerationType="class">
+        <attribute name="image" optional="YES" attributeType="Binary"/>
+        <attribute name="summary" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <attribute name="url" optional="YES" attributeType="URI"/>
+        <relationship name="episodes" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Episode" inverseName="podcast" inverseEntity="Episode"/>
+    </entity>
+    <elements>
+        <element name="Episode" positionX="312.3203125" positionY="49.26953125" width="128" height="178"/>
+        <element name="Podcast" positionX="-243.4296875" positionY="44.12109375" width="128" height="118"/>
+    </elements>
+</model>

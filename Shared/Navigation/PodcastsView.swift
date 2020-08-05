@@ -11,14 +11,17 @@ struct PodcastsView: View {
     var podcasts: [Podcast] = []
     var body: some View {
         NavigationView {
-            List(podcasts) {podcast in
-                NavigationLink(
-                    destination: EpisodesView(episodes: podcast.episodes)) {
-                    Image(systemName: "photo")
-                    VStack(alignment: .leading) {
-                        Text(podcast.title)
-                        Text("Number of episodes: \(podcast.episodes.count)")
-                            .foregroundColor(.secondary)
+            List(podcasts) {(podcast:Podcast) in
+                if let title = podcast.title,
+                   let episodes = podcast.episodes?.array as? [Episode] {
+                    NavigationLink(
+                        destination: EpisodesView(episodes: episodes)) {
+                        Image(systemName: "photo")
+                        VStack(alignment: .leading) {
+                            Text(title)
+                            Text("Number of episodes: \(episodes.count)")
+                                .foregroundColor(.secondary)
+                        }
                     }
                 }
             }
@@ -26,9 +29,9 @@ struct PodcastsView: View {
         }
     }
 }
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        PodcastsView(podcasts: testData)
-    }
-}
+//
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+////        PodcastsView(podcasts: testData)
+//    }
+//}

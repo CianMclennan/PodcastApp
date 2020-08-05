@@ -11,14 +11,15 @@ struct EpisodesView: View {
     var episodes:[Episode]
     var body: some View {
         
-        List(episodes) { episode in
-            NavigationLink(
-                destination: PlayerView(
-                    title: episode.title,
-                    url: URL(string: episode.audioURL)!)
-            )
-            {
-                Text(episode.title)
+        List(episodes) { (episode:Episode) in
+            if let title = episode.title {
+                NavigationLink(
+                    destination: PlayerView(
+                        currentEpisode: episode
+                ))
+                {
+                    Text(title)
+                }
             }
         }.navigationTitle("Episodes")
     }
@@ -26,6 +27,6 @@ struct EpisodesView: View {
 
 struct EpisodesView_Previews: PreviewProvider {
     static var previews: some View {
-        EpisodesView(episodes: [Episode(title: "title", description: "description", imageURL: "", audioURL: "")])
+        EpisodesView(episodes: [])
     }
 }
